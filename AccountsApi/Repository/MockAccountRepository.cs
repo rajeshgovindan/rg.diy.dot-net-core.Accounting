@@ -7,7 +7,7 @@ public class MockAccountRepository : IAccountRepository
     public MockAccountRepository(){
         this._accountsDict = new Dictionary<string,AccountEntity>();
         this._accountsDict.Add("10001",new AccountEntity(){
-             Id = 1,
+             Id = "1",
              AccountNumber = "10001",
              BalanceAmount = 100
              
@@ -32,5 +32,15 @@ public class MockAccountRepository : IAccountRepository
             throw new System.Exception("Account doesn't exists");
         }
         this._accountsDict[accountEntity.AccountNumber]=accountEntity;
+    }
+
+    public IList<AccountEntity> GetAccount(string accountNumber)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveAccount(string accountNumber)
+    {
+        throw new System.NotImplementedException();
     }
 }

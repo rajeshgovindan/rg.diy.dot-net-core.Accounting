@@ -1,6 +1,11 @@
-public class AccountEntity{
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-    public long Id;
+
+public class AccountEntity{
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id;
     public string AccountNumber {get; set;}
     public decimal BalanceAmount {get; set;}
     
