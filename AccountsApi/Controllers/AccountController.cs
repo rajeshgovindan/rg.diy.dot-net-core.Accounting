@@ -15,7 +15,15 @@ public class AccountController :ControllerBase{
     public IList<AccountModel> GetAccounts(){
         return this._accountService.FetchAccounts();
 
-    } 
+    }
+
+    [HttpGet]
+    [Route("{accountNumber}",Name ="GetAccount")]
+    public AccountModel GetAccount(string accountNumber)
+    {
+        return this._accountService.GetAccount(accountNumber);
+
+    }
 
     [HttpGet("balance")]
     public decimal GetBalance(string accountNumber){
@@ -28,8 +36,10 @@ public class AccountController :ControllerBase{
     }
 
     [HttpPost()]
-    public void Create(AccountModel account){
-        this._accountService.AddAccount(account);       
+    public IActionResult Create(AccountModel account){
+        this._accountService.AddAccount(account);
+
+        return CreatedAtRoute("GetAccount", new { accountNumber = account.AccountNumber }, account);
 
     }
 }

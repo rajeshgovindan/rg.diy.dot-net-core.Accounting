@@ -34,7 +34,7 @@ public class MockAccountRepository : IAccountRepository
         this._accountsDict[accountEntity.AccountNumber]=accountEntity;
     }
 
-    public IList<AccountEntity> GetAccount(string accountNumber)
+    public AccountEntity GetAccount(string accountNumber)
     {
         throw new System.NotImplementedException();
     }

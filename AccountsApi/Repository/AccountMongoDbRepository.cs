@@ -25,11 +25,16 @@ namespace AccountsApi.Repository
         {
            return  _ledgerAccounts.Find<AccountEntity>(account=>true).ToList<AccountEntity>();        }
 
-        public IList<AccountEntity> GetAccount(string accountNumber)
+        public AccountEntity GetAccount(string accountNumber)
         {
-            return _ledgerAccounts.Find<AccountEntity>(
+            var accounts =  _ledgerAccounts.Find<AccountEntity>(
                 account => account.AccountNumber == accountNumber)
-                 .ToList<AccountEntity>();
+                .ToList<AccountEntity>();
+            if(accounts != null || accounts.Count >0 ){
+                return accounts[0];
+            }
+
+            return null;
         }
 
         public void RemoveAccount(String accountNumber)
