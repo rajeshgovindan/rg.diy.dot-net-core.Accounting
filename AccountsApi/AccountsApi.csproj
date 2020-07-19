@@ -13,5 +13,6 @@
     <Folder Include="mapper\" />
     <Folder Include="Config\" />
     <Folder Include="Config\properties\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>
