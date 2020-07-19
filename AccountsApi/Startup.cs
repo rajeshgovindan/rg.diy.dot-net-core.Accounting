@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AccountsApi.Config.properties;
 using AccountsApi.Exceptions;
 using AccountsApi.Repository;
+using AccountsApi.Services;
+using AccountsApi.Services.contract;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -38,8 +40,12 @@ namespace AccountsApi
             services.AddAutoMapper(typeof(Startup));
 
             services.AddSingleton<IAccountService, AccountService>();
+            services.AddSingleton<ICustomerService, CustomerService>();
+
+
             //services.AddSingleton<IAccountRepository, MockAccountRepository>();
             services.AddSingleton<IAccountRepository, AccountMongoDbRepository>();
+            
 
             services.Configure<AccountDatabaseSettings>(
         Configuration.GetSection(nameof(AccountDatabaseSettings)));
@@ -49,6 +55,11 @@ namespace AccountsApi
             services.AddLogging(opt =>
             {
                 opt.AddConsole();
+            });
+
+            services.AddSwaggerGen(config =>
+            {
+                config.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo() { Title = "Account API", Version = "v1" });
             });
             services.AddControllers();
         }
@@ -67,19 +78,7 @@ namespace AccountsApi
                 app.UseExceptionHandler(options =>
                 {
                     GlobalExceptionHandler.handle(options, loggerFactory);
-                    //options.Run(async context =>
-                    //{
-                    //    context.Response.StatusCode = 500;
-                    //    context.Response.ContentType = "application/json";
-                    //    var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    //    if (errorFeature != null)
-                    //    {
-                    //        ///TODO: Need to Log here
-                    //        ///
-                    //    }
-
-                    //    await context.Response.WriteAsync("{code:100,error:Internalerror}");
-                    //});
+                    
                 });
             }
 
@@ -89,6 +88,12 @@ namespace AccountsApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(config =>
+            {
+                config.SwaggerEndpoint("/swagger/v1/swagger.json", "Account Api");
+            });
 
             app.UseEndpoints(endpoints =>
             {

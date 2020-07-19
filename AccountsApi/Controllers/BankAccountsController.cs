@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
  [ApiController]
  [Route("[controller]")]
-public class AccountController :ControllerBase{
+public class BankAccountsController :ControllerBase{
 
     private IAccountService _accountService;
-    private ILogger<AccountController> logger;
+    private ILogger<BankAccountsController> logger;
     
 
-    public  AccountController(IAccountService accountService, ILogger<AccountController> logger){
+    public  BankAccountsController(IAccountService accountService, ILogger<BankAccountsController> logger){
         this._accountService = accountService;
         this.logger = logger;
     }
@@ -48,11 +48,12 @@ public class AccountController :ControllerBase{
             return 0M;
         }
         this.logger.LogInformation("Balance of account number {0} is {1}", accountNumber, account.BalanceAmount);
+        
         return account.BalanceAmount;
     }
 
     [HttpPost()]
-    public IActionResult Create(AccountModel account){
+    public IActionResult OpenNewAccount(AccountModel account){
 
         this._accountService.AddAccount(account);
         this.logger.LogInformation("New Account created and account number {0}", account.AccountNumber);
