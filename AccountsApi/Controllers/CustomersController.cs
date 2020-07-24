@@ -62,6 +62,7 @@ namespace AccountsApi.Controllers
             }
 
             var newCustomer = this._customerService.CreateCustomer(customerModel);
+            newCustomer.CustomerCode = "C001";
 
 
             return CreatedAtRoute("GetCustomer", new { customerId = customerModel.CustomerCode }, newCustomer);

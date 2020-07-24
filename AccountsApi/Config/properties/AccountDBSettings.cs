@@ -5,6 +5,7 @@ namespace AccountsApi.Config.properties
     public interface IAccountDatabaseSettings
     {
         public string AccountCollectionName { get; set; }
+        public string CustomerCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }
@@ -14,6 +15,7 @@ namespace AccountsApi.Config.properties
     public class AccountDatabaseSettings : IAccountDatabaseSettings
     {
         public string AccountCollectionName { get; set; }
+        public string CustomerCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }

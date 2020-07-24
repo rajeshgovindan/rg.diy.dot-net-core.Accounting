@@ -1,0 +1,12 @@
+﻿apiVersion: v1
+kind: Service
+metadata:
+    name: account-service-loadbalancer
+spec:
+    type: LoadBalancer
+    selector:
+        app: account-service-pod
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 80

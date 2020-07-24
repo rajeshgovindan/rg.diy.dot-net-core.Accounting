@@ -43,9 +43,10 @@ namespace AccountsApi
             services.AddSingleton<ICustomerService, CustomerService>();
 
 
-            services.AddSingleton<IAccountRepository, MockAccountRepository>();
-            //services.AddSingleton<IAccountRepository, AccountMongoDbRepository>();
-            
+           // services.AddSingleton<IAccountRepository, MockAccountRepository>();
+            services.AddSingleton<IAccountRepository, AccountMongoDbRepository>();
+            services.AddSingleton<ICustomerRepository, CustomerMongoDbRepository>();
+
 
             services.Configure<AccountDatabaseSettings>(
         Configuration.GetSection(nameof(AccountDatabaseSettings)));

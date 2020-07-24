@@ -15,6 +15,7 @@ public class BankAccountsController :ControllerBase{
         this._accountService = accountService;
         this.logger = logger;
     }
+    
 
     [HttpGet]
     public IList<AccountModel> GetAccounts(){

@@ -1,0 +1,27 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service-deployment
+  labels:
+    app: account-service-deployment-label
+spec:
+  replicas : 1
+  selector:
+    matchLabels:
+      app: account-service-pod
+  template:
+    metadata:
+      labels:
+        app: account-service-pod
+    spec:
+      containers:
+      - name: account-service-cnt
+        image: raj.diy.webapi.accountapi:0.0.1
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+
+  

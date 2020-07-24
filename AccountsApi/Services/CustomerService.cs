@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using AccountsApi.Model;
+using AccountsApi.Repository;
 using AccountsApi.Services.contract;
+using AutoMapper;
 
 namespace AccountsApi.Services
 {
     public class CustomerService : ICustomerService
     {
-        public CustomerService()
+        private ICustomerRepository _customerRepository;
+        private readonly IMapper _mapper;
+        public CustomerService(ICustomerRepository customerRepository,  IMapper mapper)
         {
+            _customerRepository = customerRepository;
+            _mapper = mapper;
         }
 
         public CustomerModel CreateCustomer(CustomerModel newCustomer)
@@ -28,8 +34,11 @@ namespace AccountsApi.Services
                 throw new ArgumentException("Invalid bank account data");
             }
 
-            newCustomer.CustomerCode = "C001";
-            newCustomer.BankAccount.AccountNumber = "A001";
+            CustomerEntity entity = _mapper.Map<CustomerEntity>(newCustomer);
+            _customerRepository.SaveCustomer(entity);
+
+            //newCustomer.CustomerCode = "C001";
+            //newCustomer.BankAccount.AccountNumber = "A001";
             return newCustomer;
         }
 
