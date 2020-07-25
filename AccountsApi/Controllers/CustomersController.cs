@@ -20,26 +20,30 @@ namespace AccountsApi.Controllers
         [HttpGet()]
         public IActionResult FetchCustomers()
         {
-            var customer = new CustomerModel
-            {
-                FirstName = "Rajesh",
-                LastName = "Govindan",
-                DateOfBirth = new DateTime(2000, 04, 25),
-                Address = new Address()
-                {
-                    DoorNo = "D1",
-                    Street = "Jaswanth Nagar",
-                    Area = "Mogappair",
-                    City = "Chennai"
-                },
-                BankAccount = new AccountModel()
-                {
-                     Description="Saving Account"
-                }
-                
-            };
 
-            return Ok(customer);
+            var customers = _customerService.FetchCustomers();
+            //var customer = new CustomerModel
+            //{
+            //    FirstName = "Rajesh",
+            //    LastName = "Govindan",
+            //    DateOfBirth = new DateTime(2000, 04, 25),
+            //    Address = new Address()
+            //    {
+            //        DoorNo = "D1",
+            //        Street = "Jaswanth Nagar",
+            //        Area = "Mogappair",
+            //        City = "Chennai"
+            //    },
+            //    BankAccounts = new List<AccountModel>()
+                
+            //};
+
+            //customer.BankAccounts.Add(new AccountModel()
+            //{
+            //    Description = "Saving Account"
+            //});
+
+            return Ok(customers);
         }
 
         [HttpGet]

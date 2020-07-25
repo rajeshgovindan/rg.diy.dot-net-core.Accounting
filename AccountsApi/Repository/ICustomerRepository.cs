@@ -7,6 +7,8 @@ namespace AccountsApi.Repository
     {
         public IList<CustomerEntity> FetchCustomers();
         public CustomerEntity SaveCustomer(CustomerEntity customer);
+        public CustomerEntity GetCustomer(string customerCode);
+        
     }
 
     

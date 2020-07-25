@@ -21,6 +21,18 @@ namespace AccountsApi.Repository
             return _customers.Find<CustomerEntity>(CustomerEntity => true).ToList<CustomerEntity>();
         }
 
+        public CustomerEntity GetCustomer(string customerCode)
+        {
+            var customers =  _customers.Find<CustomerEntity>(customer =>
+            customer.CustomerCode == customerCode).ToList<CustomerEntity>();
+
+            if(null != customers &&  customers.Count > 0)
+            {
+                return customers[0];
+            }
+            return null;
+        }
+
         public CustomerEntity SaveCustomer(CustomerEntity customer)
         {
             if(null == customer)
@@ -32,5 +44,7 @@ namespace AccountsApi.Repository
 
             return customer;
         }
+
+
     }
 }

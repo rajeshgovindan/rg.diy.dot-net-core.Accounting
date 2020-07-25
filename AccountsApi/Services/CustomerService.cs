@@ -24,12 +24,12 @@ namespace AccountsApi.Services
                 throw new ArgumentException("Invalid Customer data");
             }
 
-            if(null == newCustomer.BankAccount)
+            if(null == newCustomer.BankAccounts && newCustomer.BankAccounts.Count == 0)
             {
                 throw new ArgumentException("Bank account not found");
             }
 
-            if(null == newCustomer.BankAccount.Type || null == newCustomer.BankAccount.Description)
+            if(null == newCustomer.BankAccounts[0].Type || null == newCustomer.BankAccounts[0].Description)
             {
                 throw new ArgumentException("Invalid bank account data");
             }
@@ -44,7 +44,8 @@ namespace AccountsApi.Services
 
         public IList<CustomerModel> FetchCustomers()
         {
-            throw new NotImplementedException();
+            var customerEntities =  _customerRepository.FetchCustomers();
+            return _mapper.Map<IList<CustomerModel>>(customerEntities);
         }
 
         public CustomerModel GetCustomer(string customerCode)

@@ -1,23 +1,42 @@
 using System.Collections.Generic;
 using System.Linq;
+using AccountsApi.Repository;
 using AutoMapper;
 
 public class AccountService : IAccountService
 {
     private IAccountRepository _accountRepository;
+    private ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
-    public AccountService(IAccountRepository accountRepository, IMapper mapper ){
+    public AccountService(IAccountRepository accountRepository,
+        ICustomerRepository customerRepository,
+        IMapper mapper ){
         this._accountRepository = accountRepository;
+        this._customerRepository = customerRepository;
         this._mapper = mapper;
 
     }
 
-    public AccountModel AddAccount(AccountModel account)
+    public AccountModel AddAccount(string customerCode,AccountModel account)
     {
-        
+        var customerEntity = _customerRepository.GetCustomer(customerCode);
+        //if(null == customerEntity)
+        //{
+        //    throw new System.Exception("Customer not found");
+        //}
         AccountEntity entity = _mapper.Map<AccountEntity>(account);
-        this._accountRepository.AddAccount(entity);
-        return account;
+
+        var savedAccount = _accountRepository.AddAccount(customerCode, entity);
+
+        if(savedAccount == null)
+        {
+            throw new System.Exception("Account is not added, please try after sometime");
+        }
+
+        return _mapper.Map<AccountModel>(savedAccount);
+
+
+
 
     }
 

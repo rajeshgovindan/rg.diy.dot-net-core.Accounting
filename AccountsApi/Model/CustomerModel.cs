@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AccountsApi.Model
@@ -20,7 +21,7 @@ namespace AccountsApi.Model
         [Required]
         public Address Address { get; set; }
         [Required]
-        public AccountModel BankAccount { get; set; }
+        public IList<AccountModel> BankAccounts{ get; set; }
 
         public bool IsActive { get; set; }
     }

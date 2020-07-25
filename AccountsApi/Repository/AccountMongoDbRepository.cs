@@ -8,17 +8,47 @@ namespace AccountsApi.Repository
     public class AccountMongoDbRepository : IAccountRepository
     {
         private readonly IMongoCollection<AccountEntity> _ledgerAccounts ;
+        private readonly IMongoCollection<CustomerEntity> _customers;
 
         public AccountMongoDbRepository(IAccountDatabaseSettings dbSettings)
         {
             var client = new MongoClient(dbSettings.ConnectionString);
             var database = client.GetDatabase(dbSettings.DatabaseName);
             _ledgerAccounts = database.GetCollection<AccountEntity>(dbSettings.AccountCollectionName);
+            _customers = database.GetCollection<CustomerEntity>(dbSettings.CustomerCollectionName);
+        }
+
+        public AccountEntity AddAccount(string customerCode,AccountEntity accountEntity)
+        {
+            //_ledgerAccounts.InsertOne(accountEntity);
+
+
+            if (null == accountEntity)
+            {
+                throw new ArgumentNullException("Customer entity is null");
+            }
+
+            var filter = Builders<CustomerEntity>.Filter.Eq("CustomerCode", customerCode);
+            var updateDef = Builders<CustomerEntity>.Update.Push<AccountEntity>("BankAccounts", accountEntity);
+
+            var result = _customers.UpdateOne(filter, updateDef);
+            if(result.MatchedCount == 0)
+            {
+                throw new Exception("Customer not found");
+            }
+            if(result.ModifiedCount > 0)
+            {
+                return accountEntity;
+            }
+
+            return null;
+            
+
         }
 
         public void AddAccount(AccountEntity accountEntity)
         {
-            _ledgerAccounts.InsertOne(accountEntity);
+            throw new NotImplementedException();
         }
 
         public IList<AccountEntity> FetchAccounts()

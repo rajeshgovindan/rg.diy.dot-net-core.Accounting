@@ -6,7 +6,7 @@ public interface IAccountService
 
     public AccountModel GetAccount(string accountNumber);
 
-    public AccountModel AddAccount(AccountModel account);
+    public AccountModel AddAccount(string customerCode,AccountModel account);
 
     public AccountModel UpdateAccount(AccountModel account);
     

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -24,7 +25,7 @@ namespace AccountsApi.Repository
         
         public AddressValueObject Address { get; set; }
         
-       // public AccountEntity BankAccount { get; set; }
+        public IList<AccountEntity> BankAccounts { get; set; }
 
         public bool IsActive { get; set; }
     }

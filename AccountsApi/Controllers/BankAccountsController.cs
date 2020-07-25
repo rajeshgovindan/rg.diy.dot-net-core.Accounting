@@ -54,9 +54,10 @@ public class BankAccountsController :ControllerBase{
     }
 
     [HttpPost()]
-    public IActionResult OpenNewAccount(AccountModel account){
+    [Route("customer/{customerCode}")]
+    public IActionResult OpenNewAccount(string customerCode,AccountModel account){
 
-        this._accountService.AddAccount(account);
+        this._accountService.AddAccount(customerCode,account);
         this.logger.LogInformation("New Account created and account number {0}", account.AccountNumber);
         return CreatedAtRoute("GetAccount", new { accountNumber = account.AccountNumber }, account);
 
